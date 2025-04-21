@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    About | ReWise
+{% endblock %}
+{% block body %}
+
+<div class="container text-center my-5">
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold text-body-emphasis">About ReWise</h1>
+        <div class="col-lg-8 mx-auto">
+            <p class="lead mb-4">
+                ReWise is your one-stop platform for accessing and organizing previous year GRIET question papers with ease.
+            </p>
+            <h2 class="pb-2 border-bottom">Key Features:</h2>
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+           <img src="{{ url_for('static', filename='icons/filter.svg') }}" alt="Filter Icon" width="60" height="60" aria-hidden="true">
+        </div>
+        <h4 class="fs-2 text-body-emphasis">Filter</h4>
+        <p>Filter question papers by department, subject, year of study, syllabus and much more!</p>
+
+      </div>
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <img src="{{ url_for('static', filename='icons/search.svg') }}" alt="Filter Icon" width="60" height="60" aria-hidden="true">
+        </div>
+        <h3 class="fs-2 text-body-emphasis">Search</h3>
+        <p>Simple and fast search for quick access</p>
+
+      </div>
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <img src="{{ url_for('static', filename='icons/upload-download.svg') }}" alt="Filter Icon" width="60" height="60" class="mb-3" aria-hidden="true">
+        </div>
+        <h3 class="fs-2 text-body-emphasis">Upload/Download</h3>
+        <p>Admins can upload PDFs, viewable and downloadable by students</p>
+
+      </div>
+    </div>
+            <hr class="my-4">
+            <h3 class="fw-bold">Why ReWise?</h3>
+            <p>
+                Our goal is to reduce exam stress and make past paper access seamless for every college student.
+                ReWise brings structure, accessibility, and convenience — all in one platform.
+            </p>
+            <footer class="text-muted mt-4">
+                Made by students, for students.
+            </footer>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

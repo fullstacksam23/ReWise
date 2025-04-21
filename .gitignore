@@ -1,0 +1,39 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Flask instance
+instance/
+
+# Environment and Firebase secrets
+firebase_config.json
+
+# SQLite DBs
+*.sqlite3
+*.db
+
+# Uploaded PDFs
+uploads/
+static/uploads/
+papers/
+*.pdf
+
+# Virtual environments
+venv/
+env/
+
+# IDE configs
+.idea/
+.vscode/
+.DS_Store
+
+# Logs & test coverage
+*.log
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/

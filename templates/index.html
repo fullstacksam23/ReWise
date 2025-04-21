@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+    ReWise
+{% endblock %}
+{% block body %}
+    <div class="container text-center my-5">
+        <div class="px-4 py-5 my-5 text-center">
+    {#    <img class="d-block mx-auto mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">#}
+        <h1 class="display-5 fw-bold text-body-emphasis">ReWise</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">Access Previous Year Question Papers Easily</p>
+        </div>
+{#            <div class="input-group mb-3 w-75 mx-auto">#}
+{#                <input type="text" class="form-control" placeholder="Search By Keyword" aria-label="Search by keyword" aria-describedby="button-addon2">#}
+{#                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>#}
+{#            </div>#}
+            <a class = "btn btn-success btn-lg" href="{{ url_for('browse') }}">Explore Papers</a>
+      </div>
+    <h3>Recently Uploaded</h3>
+    </div>
+
+    <div class="container text-center my-5">
+
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      {% for paper in papers %}
+          <div class="card my-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ paper.subject }}</h5>
+              <p class="card-text">
+                Type: {{ paper.type }}
+                Year: {{ paper.paperyear }}
+                  Set: {{ paper.set }}
+              </p>
+                <a class="btn btn-sm btn-outline-primary" target="_blank" href="{{ url_for('static', filename=paper.filepath.split('static/')[1]) }}">
+                  View PDF
+                </a>
+                <a class="btn btn-sm btn-outline-success" download href="{{ url_for('static', filename=paper.filepath.split('static/')[1]) }}">
+                    Download PDF
+                </a>
+            </div>
+          </div>
+          {% else %}
+            <p>No Recent papers</p>
+      {% endfor %}
+          </div>
+    </div>
+
+
+
+
+{% endblock %}

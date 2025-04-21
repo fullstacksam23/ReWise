@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block styles %}
+        {{ bootstrap.load_css() }}
+    {% endblock %}
+<style>
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #007bff, #3399ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-icon img {
+    width: 36px;
+    height: 36px;
+    filter: brightness(0) invert(1); /* Makes SVG white if it's black */
+}
+</style>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <div class="col-md-3 mb-2 mb-md-0">
+{#        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">#}
+{#          <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>#}
+{#        </a>#}
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="{{ url_for('home') }}" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="{{ url_for('upload') }}" class="nav-link px-2">Upload</a></li>
+        <li><a href="{{ url_for('browse') }}" class="nav-link px-2">Browse</a></li>
+        <li><a href="{{ url_for('about') }}" class="nav-link px-2">About</a></li>
+      </ul>
+
+      <div class="col-md-3 text-end">
+          {% if session.get('admin') %}
+                    <a href="{{ url_for('admin_logout') }}">
+                        <button class="btn btn-primary">Logout</button>
+                    </a>
+          {% endif %}
+      </div>
+    </header>
+  </div>
+    {% block body %}{% endblock %}
+{{ bootstrap.load_js() }}
+</body>
+</html>

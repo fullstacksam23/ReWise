@@ -1,0 +1,106 @@
+{% extends 'base.html' %} {% from 'bootstrap5/form.html' import render_form %}
+{% block title %}Upload{% endblock %}
+{% block body %}
+    <div class="container">
+      <h1 class="heading">Upload File</h1>
+
+      <form method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-light">
+    {{ form.hidden_tag() }}
+
+    <!-- Subject Field -->
+    <div class="mb-3">
+        {{ form.subject.label(class="form-label") }}
+        {{ form.subject(class="form-control") }}
+    </div>
+
+    <!-- File Upload Field -->
+    <div class="mb-3">
+        {{ form.pdf_file.label(class="form-label") }}
+        {{ form.pdf_file(class="form-control") }}
+    </div>
+
+              <div class="mb-3">
+      {{ form.paperyear.label(class="form-label") }}
+      {{ form.paperyear(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.type.label(class="form-label") }}
+      {{ form.type(class="form-select") }}
+    </div>
+
+          <div class="mb-3">
+          {{ form.set.label(class="form-label") }}
+          {{ form.set(class="form-select") }}
+    </div>
+    <!-- Departments Section -->
+    <h4 class="mt-4">Departments</h4>
+    <div class="row mb-3">
+        <div class="col-md-4 form-check">
+            {{ form.cse(class="form-check-input") }}
+            {{ form.cse.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.aiml(class="form-check-input") }}
+            {{ form.aiml.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.ds(class="form-check-input") }}
+            {{ form.ds.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.it(class="form-check-input") }}
+            {{ form.it.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.csbs(class="form-check-input") }}
+            {{ form.csbs.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.eee(class="form-check-input") }}
+            {{ form.eee.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.ece(class="form-check-input") }}
+            {{ form.ece.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.mech(class="form-check-input") }}
+            {{ form.mech.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-4 form-check">
+            {{ form.ce(class="form-check-input") }}
+            {{ form.ce.label(class="form-check-label") }}
+        </div>
+    </div>
+
+    <!-- Years Section -->
+    <h4 class="mt-4">Years</h4>
+    <div class="row mb-3">
+        <div class="col-md-3 form-check">
+            {{ form.year1(class="form-check-input") }}
+            {{ form.year1.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-3 form-check">
+            {{ form.year2(class="form-check-input") }}
+            {{ form.year2.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-3 form-check">
+            {{ form.year3(class="form-check-input") }}
+            {{ form.year3.label(class="form-check-label") }}
+        </div>
+        <div class="col-md-3 form-check">
+            {{ form.year4(class="form-check-input") }}
+            {{ form.year4.label(class="form-check-label") }}
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-4">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+    </div>
+{% endblock %}
+
