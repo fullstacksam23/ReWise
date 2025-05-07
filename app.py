@@ -142,7 +142,7 @@ class FilterForm(FlaskForm):
         ("IT", "IT"),
         ("CSBS", "CSBS"),
         ("ECE", "ECE"),
-        ("ME", "ME"),
+        ("MECH", "MECH"),
         ("EEE", "EEE"),
         ("CE", "CE"),
     ], validators=[Optional()])
@@ -184,9 +184,10 @@ def admin_login():
             return redirect(url_for('upload'))
 
         except Exception as e:
-            flash(f'Login failed: {str(e)}', 'danger')
+            flash('Incorrect email or password. Please try again.', 'danger')
 
     return render_template('admin_login.html')
+
 
 @app.route('/admin/logout')
 def admin_logout():
@@ -196,7 +197,6 @@ def admin_logout():
     return redirect(url_for('admin_login'))
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
-
     if 'admin' not in session:
         flash('You need to be logged in as admin to upload papers.', 'danger')
         return redirect(url_for('admin_login'))
@@ -205,6 +205,11 @@ def upload():
     if form.validate_on_submit():
         pdf = form.pdf_file.data
         original_filename = secure_filename(pdf.filename)
+
+        # Check if the uploaded file is a PDF
+        if not original_filename.lower().endswith('.pdf'):
+            flash('Invalid file type. Please upload a PDF file.', 'danger')
+            return redirect(url_for('upload'))
 
         # Generate a unique filename with timestamp or UUID
         unique_suffix = datetime.utcnow().strftime("%Y%m%d%H%M%S") + "_" + str(uuid.uuid4())[:8]
@@ -217,7 +222,7 @@ def upload():
             subject=form.subject.data.upper(),
             filepath=filepath,
             paperyear=form.paperyear.data,
-            set = form.set.data,
+            set=form.set.data,
             type=form.type.data,
             aiml=form.aiml.data,
             cse=form.cse.data,
@@ -226,8 +231,8 @@ def upload():
             eee=form.eee.data,
             ece=form.ece.data,
             mech=form.mech.data,
-            ce = form.ce.data,
-            csbs = form.csbs.data,
+            ce=form.ce.data,
+            csbs=form.csbs.data,
             year1=form.year1.data,
             year2=form.year2.data,
             year3=form.year3.data,
@@ -235,24 +240,29 @@ def upload():
         )
         db.session.add(paper)
         db.session.commit()
+        flash('Paper uploaded successfully!', 'success')
         return redirect(url_for("home"))
     return render_template("upload.html", form=form)
+
 @app.route("/browse", methods=["GET", "POST"])
 def browse():
-    form = FilterForm(request.args)  # use GET parameters
-    papers = QuestionPaper.query.order_by(QuestionPaper.upload_date.desc())
+    form = FilterForm(request.args)
+    page = request.args.get('page', 1, type=int)  # Get the current page number, default to 1
+    per_page = 10  # You can adjust the number of papers per page
 
-    # Apply filters if present
+    papers_query = QuestionPaper.query.order_by(QuestionPaper.upload_date.desc())
+
     if form.subject.data:
-        papers = papers.filter(QuestionPaper.subject.ilike(f"%{form.subject.data}%"))
+        papers_query = papers_query.filter(QuestionPaper.subject.ilike(f"%{form.subject.data.upper()}%"))
     if form.year.data:
-        papers = papers.filter(QuestionPaper.paperyear == form.year.data)
+        papers_query = papers_query.filter(QuestionPaper.paperyear == form.year.data)
     if form.branch.data:
         branch_filter = form.branch.data.lower()
         if hasattr(QuestionPaper, branch_filter):
-            papers = papers.filter(getattr(QuestionPaper, branch_filter).is_(True))
+            papers_query = papers_query.filter(getattr(QuestionPaper, branch_filter).is_(True))
 
-    papers = papers.all()
+    papers = papers_query.paginate(page=page, per_page=per_page)  # Paginate the results
+
     return render_template("browse.html", form=form, papers=papers)
 @app.route("/about")
 def about():

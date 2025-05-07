@@ -6,78 +6,74 @@
 <div class="container-fluid">
   <div class="row">
 
-    <!-- Sidebar for Filters -->
     <div class="col-md-3">
-  <div class="p-3 bg-light rounded shadow-sm">
-    <form method="GET" action="{{ url_for('browse') }}">
-      <div class="mb-3">
-        {{ form.subject.label(class="form-label") }}
-        {{ form.subject(class="form-control", placeholder="Enter subject code") }}
+      <div class="p-3 bg-light rounded shadow-sm">
+        <form method="GET" action="{{ url_for('browse') }}">
+          <div class="mb-3">
+            {{ form.subject.label(class="form-label") }}
+            {{ form.subject(class="form-control", placeholder="Enter subject code") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.year.label(class="form-label") }}
+            {{ form.year(class="form-select") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.branch.label(class="form-label") }}
+            {{ form.branch(class="form-select") }}
+          </div>
+
+          {{ form.submit(class="btn btn-primary w-100") }}
+        </form>
       </div>
+    </div>
 
-      <div class="mb-3">
-        {{ form.year.label(class="form-label") }}
-        {{ form.year(class="form-select") }}
-      </div>
-
-      <div class="mb-3">
-        {{ form.branch.label(class="form-label") }}
-        {{ form.branch(class="form-select") }}
-      </div>
-
-      {{ form.submit(class="btn btn-primary w-100") }}
-    </form>
-  </div>
-</div>
-
-
-    <!-- Main Content Area -->
     <div class="col-md-9">
       <h3 class="mt-3">Question Papers</h3>
 
-      {% for paper in papers %}
+      {% for paper in papers.items %}
       <div class="card my-3 shadow-sm">
         <div class="card-body">
           <h5 class="card-title">{{ paper.subject }}</h5>
           <p class="card-text">
             {{ paper.type }}
             Year: {{ paper.paperyear }}
-              Set: {{ paper.set }}
+            Set: {{ paper.set }}
           </p>
-            <a class="btn btn-sm btn-outline-primary" target="_blank" href="{{ url_for('static', filename=paper.filepath.split('static/')[1]) }}">
-              View PDF
-            </a>
-            <a class="btn btn-sm btn-outline-success" download href="{{ url_for('static', filename=paper.filepath.split('static/')[1]) }}">
-                Download PDF
-            </a>
+          <a class="btn btn-sm btn-outline-primary" target="_blank"
+             href="{{ url_for('static', filename=paper.filepath.split('static/')[1]) }}">
+            View PDF
+          </a>
+          <a class="btn btn-sm btn-outline-success" download
+             href="{{ url_for('static', filename=paper.filepath.split('static/')[1]) }}">
+            Download PDF
+          </a>
         </div>
       </div>
       {% else %}
-        <p>No papers found.</p>
+      <p>No papers found.</p>
       {% endfor %}
 
-      <!-- Pagination -->
-{#      <nav>#}
-{#        <ul class="pagination justify-content-center">#}
-{#          {% if papers.has_prev %}#}
-{#          <li class="page-item">#}
-{#            <a class="page-link" href="{{ url_for('browse', page=papers.prev_num) }}">Previous</a>#}
-{#          </li>#}
-{#          {% endif %}#}
-{##}
-{#          {% for p in range(1, papers.pages + 1) %}#}
-{#          <li class="page-item {% if p == papers.page %}active{% endif %}">#}
-{#            <a class="page-link" href="{{ url_for('browse', page=p) }}">{{ p }}</a>#}
-{#          </li>#}
-{#          {% endfor %}#}
-{##}
-{#          {% if papers.has_next %}#}
-{#          <li class="page-item">#}
-{#            <a class="page-link" href="{{ url_for('browse', page=papers.next_num) }}">Next</a>#}
-{#          </li>#}
-{#          {% endif %}#}
-{#        </ul>#}
-{#      </nav>#}
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item {% if not papers.has_prev %}disabled{% endif %}">
+            <a class="page-link" href="{{ url_for('browse', page=papers.prev_num, subject=form.subject.data, year=form.year.data, branch=form.branch.data) }}">Previous</a>
+          </li>
+          {% for page_num in papers.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+          <li class="page-item {% if papers.page == page_num %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('browse', page=page_num, subject=form.subject.data, year=form.year.data, branch=form.branch.data) }}">{{ page_num }}</a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><span class="page-link">...</span></li>
+          {% endif %}
+          {% endfor %}
+          <li class="page-item {% if not papers.has_next %}disabled{% endif %}">
+            <a class="page-link" href="{{ url_for('browse', page=papers.next_num, subject=form.subject.data, year=form.year.data, branch=form.branch.data) }}">Next</a>
+          </li>
+        </ul>
+      </nav>
 
     </div>
   </div>
