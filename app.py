@@ -16,12 +16,10 @@ import pyrebase
 with open("firebase_config.json") as f:
     firebase_config = json.load(f)
 
-# cred = credentials.Certificate("firebase_config.json")
-# firebase_admin.initialize_app(cred)
 firebase = pyrebase.initialize_app(firebase_config)
 auth = firebase.auth()
 
-UPLOAD_FOLDER = 'static/uploads'  # or wherever you want to save PDFs
+UPLOAD_FOLDER = 'static/uploads'  # path to saved pdfs
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -33,35 +31,6 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///question-papers.db"
 db.init_app(app)
-
-
-# subjects = [
-#     {
-#     "title": "CSE",
-#     "description": "Computer Science and Engineering"
-#     },
-#     {
-#         "title": "AIML",
-#         "description": "Computer Science and Engineering(AI & ML)"
-#     },
-#     {
-#         "title": "DS",
-#         "description": "Computer Science and Engineering(Data Science)"
-#     },
-#     {
-#         "title": "CSBS",
-#         "description": "Computer Science and Business Systems"
-#     },
-#     {
-#         "title": "EEE",
-#         "description": "Electronics and Communication Engineering"
-#     },
-#
-#     {
-#         "title": "MECH",
-#         "description": "Mechanical Engineering"
-#     }
-# ]
 
 class QuestionPaper(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)

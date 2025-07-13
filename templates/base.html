@@ -28,11 +28,12 @@
 <body>
     <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-      <div class="col-md-3 mb-2 mb-md-0">
-{#        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">#}
-{#          <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>#}
-{#        </a>#}
-      </div>
+<div class="col-md-3 mb-2 mb-md-0">
+  <a href="{{ url_for('home') }}" class="d-flex align-items-center text-decoration-none">
+    <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="ReWise Logo" width="40" height="40" class="me-2">
+    <span class="fs-4 fw-bold text-dark">ReWise</span>
+  </a>
+</div>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="{{ url_for('home') }}" class="nav-link px-2 link-secondary">Home</a></li>
