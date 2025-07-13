@@ -1,15 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form method="post">
-    <input name="email" type="email" placeholder="Admin Email" required>
-    <input name="password" type="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-</form>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Login{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="form-signin w-75 m-auto">
+            <form method="POST" action="{{ url_for('admin_signup') }}">
+                <h1 class="h3 mb-3 fw-normal">Admin Sign Up</h1>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <div class="alert alert-dismissible fade show" role="alert">
+                      {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endwith %}
+
+                <div class="form-floating">
+                    <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" data-ddg-inputtype="credentials.username" required>
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" data-ddg-inputtype="credentials.password.current" required>
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
